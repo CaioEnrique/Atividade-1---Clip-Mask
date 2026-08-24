@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Destinos</title>
+  <title>Efeito Text Masking - Cidades</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Lora&display=swap');
 
     * {
       box-sizing: border-box;
@@ -13,52 +13,50 @@
       padding: 0;
     }
 
+    html,
     body {
-      font-family: 'Playfair Display', Georgia, serif;
+      height: 100%;
       background-color: #ffffff;
-      color: #2b2b2b;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 80px 20px;
+      color: #111111;
+      font-family: 'Lora', Georgia, serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
-    .card {
+    .section-card {
+      height: 100vh;
+      width: 100vw;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
       text-align: center;
-      margin-bottom: 120px;
-      width: 100%;
-      max-width: 900px;
+      padding: 0 20px;
+      position: relative;
       opacity: 0;
-      transform: translateY(40px);
-      animation: fadeUp 0.8s ease forwards;
+      animation: fadeIn 1s ease forwards;
     }
 
-    .card:nth-child(2) { animation-delay: 0.15s; }
-    .card:nth-child(3) { animation-delay: 0.30s; }
-    .card:nth-child(4) { animation-delay: 0.45s; }
+    .section-card:nth-child(1) { animation-delay: 0.1s; }
+    .section-card:nth-child(2) { animation-delay: 0.2s; }
+    .section-card:nth-child(3) { animation-delay: 0.3s; }
+    .section-card:nth-child(4) { animation-delay: 0.4s; }
 
-    @keyframes fadeUp {
+    @keyframes fadeIn {
       to {
         opacity: 1;
-        transform: translateY(0);
       }
     }
 
-    .title {
-      font-size: clamp(4rem, 15vw, 11rem);
-      font-weight: 700;
-      letter-spacing: 2px;
+    .title-masked {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(5rem, 18vw, 20rem);
+      font-weight: 900;
       text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 24px;
-      
-      /* Efeito de recorte de imagem no texto */
+      line-height: 0.85;
+      margin-bottom: 30px;
       background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      background-position: center 50%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -66,83 +64,123 @@
       transition: transform 0.3s ease;
       cursor: default;
       will-change: background-position;
+      width: 100%;
+      max-width: 1100px;
+      letter-spacing: -3px;
     }
 
-    .title:hover {
-      transform: scale(1.02);
+    .title-masked:hover {
+      transform: scale(1.03);
     }
 
-    /* Imagens de fundo para o texto de cada país */
-    .africa {
-      background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=1200&auto=format&fit=crop');
+    /* Imagens de fundo aplicadas no texto */
+    .giza {
+      background-image: url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?q=80&w=1200&auto=format&fit=crop');
     }
 
-    .suica {
-      background-image: url('https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=1200&auto=format&fit=crop');
+    .paris {
+      background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1200&auto=format&fit=crop');
     }
 
-    .irlanda {
-      background-image: url('https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?q=80&w=1200&auto=format&fit=crop');
+    .dubai {
+      background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop');
     }
 
-    .canada {
-      background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?q=80&w=1200&auto=format&fit=crop');
+    .new-york {
+      background-image: url('https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=1200&auto=format&fit=crop');
     }
 
     .description {
-      max-width: 680px;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #333333;
-      margin-bottom: 24px;
-      font-weight: 400;
+      max-width: 620px;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #222222;
+      margin-bottom: 28px;
       padding: 0 16px;
     }
 
-    .btn {
+    .btn-read-more {
       display: inline-block;
-      padding: 10px 28px;
-      border: 1px solid #1a1a1a;
+      padding: 12px 34px;
+      border: 1.5px solid #111111;
       background: transparent;
-      color: #1a1a1a;
+      color: #111111;
       text-decoration: none;
-      font-family: inherit;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s, transform 0.2s;
-      letter-spacing: 1px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease-in-out;
       border-radius: 30px;
+      letter-spacing: 1.5px;
+      cursor: pointer;
       position: relative;
       overflow: hidden;
+      font-family: 'Lora', Georgia, serif;
     }
 
-    .btn::after {
+    .btn-read-more::after {
       content: '';
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
       height: 2px;
-      background: #1a1a1a;
+      background: #111111;
       transform: scaleX(0);
       transform-origin: right;
       transition: transform 0.4s ease;
     }
 
-    .btn:hover {
-      background-color: #1a1a1a;
+    .btn-read-more:hover {
+      background-color: #111111;
       color: #ffffff;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     }
 
-    .btn:hover::after {
+    .btn-read-more:hover::after {
       transform: scaleX(1);
       transform-origin: left;
     }
 
-    .btn:active {
+    .btn-read-more:active {
       transform: scale(0.96);
+    }
+
+    /* Indicador de rolagem (seta) */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: #999;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      font-family: 'Lora', Georgia, serif;
+      animation: bounce 2s ease-in-out infinite;
+      opacity: 0.7;
+    }
+
+    .scroll-indicator .arrow {
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid #999;
+      border-bottom: 2px solid #999;
+      transform: rotate(45deg);
+      margin: 0 auto;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-8px); }
+    }
+
+    /* Esconde o indicador no último card */
+    .section-card:last-child .scroll-indicator {
+      display: none;
     }
 
     /* Botão de voltar ao topo */
@@ -150,7 +188,7 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: #1a1a1a;
+      background: #111111;
       color: #fff;
       border: none;
       border-radius: 50%;
@@ -161,7 +199,7 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -182,84 +220,105 @@
       transform: scale(0.92);
     }
 
-    /* Rodapé */
-    .footer-note {
-      margin-top: 20px;
-      font-size: 0.75rem;
-      color: #aaa;
-      letter-spacing: 0.5px;
-      font-weight: 400;
-    }
-
-    .footer-note a {
-      color: #aaa;
-      text-decoration: none;
-      border-bottom: 1px dotted #ccc;
-    }
-
-    .footer-note a:hover {
-      color: #333;
-      border-bottom-color: #333;
-    }
-
     /* Responsivo */
-    @media (max-width: 600px) {
-      .card {
-        margin-bottom: 80px;
+    @media (max-width: 768px) {
+      .section-card {
+        padding: 0 16px;
       }
-      .title {
-        margin-bottom: 16px;
+      .title-masked {
+        font-size: clamp(4rem, 16vw, 12rem);
+        letter-spacing: -2px;
+        margin-bottom: 20px;
       }
       .description {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
+        max-width: 100%;
+        padding: 0 10px;
       }
-      .btn {
-        padding: 8px 22px;
-        font-size: 0.75rem;
+      .btn-read-more {
+        padding: 10px 26px;
+        font-size: 0.8rem;
+      }
+      .back-top {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+        bottom: 20px;
+        right: 20px;
+      }
+      .scroll-indicator {
+        bottom: 20px;
+        font-size: 0.6rem;
+      }
+      .scroll-indicator .arrow {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .title-masked {
+        font-size: clamp(3.2rem, 14vw, 8rem);
+        letter-spacing: -1px;
+      }
+      .description {
+        font-size: 0.8rem;
+      }
+      .btn-read-more {
+        padding: 8px 20px;
+        font-size: 0.7rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1 class="title africa" data-parallax="0.4">ÁFRICA</h1>
+  <section class="section-card">
+    <h1 class="title-masked giza" data-parallax="0.6">GIZA</h1>
     <p class="description">
-      <span id="desc-africa">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
+      <span id="desc-giza">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
     </p>
-    <a href="#" class="btn" data-target="africa">Descubra mais</a>
-  </div>
+    <a href="#" class="btn-read-more" data-target="giza">Descubra mais</a>
+    <div class="scroll-indicator">
+      <span>Role</span>
+      <span class="arrow"></span>
+    </div>
+  </section>
 
-  <div class="card">
-    <h1 class="title suica" data-parallax="0.4">SUÍÇA</h1>
+  <section class="section-card">
+    <h1 class="title-masked paris" data-parallax="0.6">PARIS</h1>
     <p class="description">
-      <span id="desc-suica">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
+      <span id="desc-paris">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
     </p>
-    <a href="#" class="btn" data-target="suica">Descubra mais</a>
-  </div>
+    <a href="#" class="btn-read-more" data-target="paris">Descubra mais</a>
+    <div class="scroll-indicator">
+      <span>Role</span>
+      <span class="arrow"></span>
+    </div>
+  </section>
 
-  <div class="card">
-    <h1 class="title irlanda" data-parallax="0.4">IRLANDA</h1>
+  <section class="section-card">
+    <h1 class="title-masked dubai" data-parallax="0.6">DUBAI</h1>
     <p class="description">
-      <span id="desc-irlanda">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
+      <span id="desc-dubai">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
     </p>
-    <a href="#" class="btn" data-target="irlanda">Descubra mais</a>
-  </div>
+    <a href="#" class="btn-read-more" data-target="dubai">Descubra mais</a>
+    <div class="scroll-indicator">
+      <span>Role</span>
+      <span class="arrow"></span>
+    </div>
+  </section>
 
-  <div class="card">
-    <h1 class="title canada" data-parallax="0.4">CANADÁ</h1>
+  <section class="section-card">
+    <h1 class="title-masked new-york" data-parallax="0.6">NEW YORK</h1>
     <p class="description">
-      <span id="desc-canada">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
+      <span id="desc-new-york">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
     </p>
-    <a href="#" class="btn" data-target="canada">Descubra mais</a>
-  </div>
+    <a href="#" class="btn-read-more" data-target="new-york">Descubra mais</a>
+  </section>
 
   <!-- Botão de voltar ao topo -->
   <button class="back-top" id="backTopBtn" aria-label="Voltar ao topo">↑</button>
-
-  <div class="footer-note">
-    <p>✈️ Role a página para ver o efeito parallax nas imagens dos títulos.</p>
-  </div>
 
   <script>
     (function() {
@@ -267,37 +326,35 @@
 
       // ---- Dados dos destinos (conteúdo mais rico) ----
       const destinationData = {
-        africa: {
-          title: "ÁFRICA",
-          description: "A África é um continente de contrastes: savanas infinitas, desertos dourados, florestas tropicais e uma diversidade cultural única. Do safári no Quênia às pirâmides do Egito, cada país oferece uma aventura inesquecível. A fauna exuberante e as tradições milenares fazem deste destino um dos mais fascinantes do planeta."
+        giza: {
+          title: "GIZA",
+          description: "Giza é um dos sítios arqueológicos mais fascinantes do mundo. Lar das icônicas Pirâmides de Gizé e da Grande Esfinge, este local milenar no Egito guarda mistérios que intrigam a humanidade há séculos. As pirâmides de Quéops, Quéfren e Miquerinos são monumentos à engenharia e à cultura do Antigo Egito, oferecendo uma viagem no tempo para quem as visita."
         },
-        suica: {
-          title: "SUÍÇA",
-          description: "A Suíça é sinônimo de precisão e beleza natural. Com os Alpes como pano de fundo, lagos cristalinos e vilarejos pitorescos, é o destino perfeito para quem busca paz e aventura. Esqui em Zermatt, chocolate em Berna e a vista do Matterhorn são apenas o começo de uma experiência inesquecível."
+        paris: {
+          title: "PARIS",
+          description: "Paris, a Cidade Luz, é sinônimo de romance, arte e elegância. Com a Torre Eiffel, o Museu do Louvre e a Catedral de Notre-Dame, a capital francesa encanta visitantes do mundo inteiro. Seus cafés charmosos, boulevards arborizados e o Rio Sena criam uma atmosfera única que inspira poetas, artistas e apaixonados por cultura."
         },
-        irlanda: {
-          title: "IRLANDA",
-          description: "A Irlanda encanta com suas colinas verdes, castelos medievais e uma atmosfera acolhedora. De Dublin a Galway, a música tradicional e os pubs animados convivem com paisagens de tirar o fôlego. Os penhascos de Moher e a lenda dos duendes tornam a ilha um lugar mágico e cheio de história."
+        dubai: {
+          title: "DUBAI",
+          description: "Dubai é uma cidade que desafia os limites da arquitetura e do luxo. Com o Burj Khalifa, a torre mais alta do mundo, e ilhas artificiais como a Palm Jumeirah, o destino combina tradição árabe com modernidade extravagante. Shoppings gigantescos, desertos para safáris e uma vida noturna vibrante fazem de Dubai um lugar de contrastes inesquecíveis."
         },
-        canada: {
-          title: "CANADÁ",
-          description: "O Canadá é imenso e diverso: das Montanhas Rochosas às planícies do centro, das florestas boreais às cidades cosmopolitas como Toronto e Vancouver. Lagos, ursos-pardos, auroras boreais e uma natureza intocada fazem deste país um paraíso para os amantes do ar livre e da fotografia."
+        "new-york": {
+          title: "NEW YORK",
+          description: "Nova York é a cidade que nunca dorme. Com a Estátua da Liberdade, Central Park, Times Square e a Broadway, a metrópole americana é um centro cultural e financeiro global. Arranha-céus icônicos como o Empire State Building e o One World Trade Center dominam o horizonte, enquanto bairros como Brooklyn e Manhattan oferecem experiências únicas a cada visita."
         }
       };
 
       // ---- Elementos ----
       const descSpans = {
-        africa: document.getElementById('desc-africa'),
-        suica: document.getElementById('desc-suica'),
-        irlanda: document.getElementById('desc-irlanda'),
-        canada: document.getElementById('desc-canada')
+        giza: document.getElementById('desc-giza'),
+        paris: document.getElementById('desc-paris'),
+        dubai: document.getElementById('desc-dubai'),
+        'new-york': document.getElementById('desc-new-york')
       };
 
-      const buttons = document.querySelectorAll('.btn');
+      const buttons = document.querySelectorAll('.btn-read-more');
       const backBtn = document.getElementById('backTopBtn');
-
-      // ---- Elementos com efeito parallax ----
-      const parallaxTitles = document.querySelectorAll('.title[data-parallax]');
+      const parallaxTitles = document.querySelectorAll('.title-masked[data-parallax]');
 
       // ---- Função para atualizar a descrição de um destino ----
       function updateDescription(target, useFull) {
@@ -315,10 +372,10 @@
           }, 50);
         } else {
           const originalTexts = {
-            africa: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
-            suica: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
-            irlanda: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
-            canada: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?'
+            giza: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
+            paris: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
+            dubai: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
+            'new-york': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?'
           };
           span.textContent = originalTexts[target] || data.description;
           span.style.opacity = '0';
@@ -330,10 +387,10 @@
 
       // ---- Estado dos botões ----
       const expandedState = {
-        africa: false,
-        suica: false,
-        irlanda: false,
-        canada: false
+        giza: false,
+        paris: false,
+        dubai: false,
+        'new-york': false
       };
 
       // ---- Clique nos botões ----
@@ -366,24 +423,18 @@
           const rect = title.getBoundingClientRect();
           const titleCenter = rect.top + rect.height / 2;
           const viewportCenter = windowHeight / 2;
-          
-          // Calcula a distância do centro do título em relação ao centro da viewport
+
           const offset = (titleCenter - viewportCenter) / windowHeight;
-          
-          // Fator de movimento: quanto maior, mais a imagem se move
-          const speed = parseFloat(title.getAttribute('data-parallax')) || 0.3;
-          
-          // Movimento vertical da imagem (em porcentagem)
-          // Valores negativos movem para cima, positivos para baixo
-          const moveY = -offset * 40 * speed;
-          
-          // Aplica o movimento mantendo o centro como referência
+          const speed = parseFloat(title.getAttribute('data-parallax')) || 0.5;
+          const moveY = -offset * 60 * speed;
+
           title.style.backgroundPosition = `center ${50 + moveY}%`;
         });
       }
 
       // ---- Throttle para performance ----
       let ticking = false;
+
       function onScroll() {
         if (!ticking) {
           window.requestAnimationFrame(() => {
@@ -412,11 +463,15 @@
       });
 
       // ---- Inicialização ----
-      // Atualiza o parallax na carga inicial
-      setTimeout(updateParallax, 100);
-      window.addEventListener('resize', updateParallax);
+      setTimeout(() => {
+        updateParallax();
+      }, 150);
 
-      // ---- Acessibilidade ----
+      window.addEventListener('resize', () => {
+        updateParallax();
+      });
+
+      // ---- Acessibilidade: navegação por teclado ----
       buttons.forEach(btn => {
         btn.addEventListener('keydown', function(e) {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -426,7 +481,7 @@
         });
       });
 
-      console.log('🌍 Destinos com efeito parallax! Role a página para ver as imagens se moverem.');
+      console.log('🌍 Rolagem livre! Cada seção ocupa 100% da tela com efeito parallax.');
     })();
   </script>
 
