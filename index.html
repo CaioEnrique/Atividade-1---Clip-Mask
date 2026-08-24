@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destinos</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Playfair Display', Georgia, serif;
+      background-color: #ffffff;
+      color: #2b2b2b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 80px 20px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 120px;
+      width: 100%;
+      max-width: 900px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .card:nth-child(2) { animation-delay: 0.15s; }
+    .card:nth-child(3) { animation-delay: 0.30s; }
+    .card:nth-child(4) { animation-delay: 0.45s; }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .title {
+      font-size: clamp(4rem, 15vw, 11rem);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 24px;
+      
+      /* Efeito de recorte de imagem no texto */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      transition: transform 0.3s ease;
+      cursor: default;
+      will-change: background-position;
+    }
+
+    .title:hover {
+      transform: scale(1.02);
+    }
+
+    /* Imagens de fundo para o texto de cada país */
+    .africa {
+      background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=1200&auto=format&fit=crop');
+    }
+
+    .suica {
+      background-image: url('https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=1200&auto=format&fit=crop');
+    }
+
+    .irlanda {
+      background-image: url('https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?q=80&w=1200&auto=format&fit=crop');
+    }
+
+    .canada {
+      background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?q=80&w=1200&auto=format&fit=crop');
+    }
+
+    .description {
+      max-width: 680px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #333333;
+      margin-bottom: 24px;
+      font-weight: 400;
+      padding: 0 16px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 28px;
+      border: 1px solid #1a1a1a;
+      background: transparent;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      letter-spacing: 1px;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #1a1a1a;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+
+    .btn:hover {
+      background-color: #1a1a1a;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Botão de voltar ao topo */
+    .back-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 22px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .back-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-top:hover {
+      transform: scale(1.08);
+      background: #000;
+    }
+
+    .back-top:active {
+      transform: scale(0.92);
+    }
+
+    /* Rodapé */
+    .footer-note {
+      margin-top: 20px;
+      font-size: 0.75rem;
+      color: #aaa;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+    }
+
+    .footer-note a {
+      color: #aaa;
+      text-decoration: none;
+      border-bottom: 1px dotted #ccc;
+    }
+
+    .footer-note a:hover {
+      color: #333;
+      border-bottom-color: #333;
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      .card {
+        margin-bottom: 80px;
+      }
+      .title {
+        margin-bottom: 16px;
+      }
+      .description {
+        font-size: 0.85rem;
+      }
+      .btn {
+        padding: 8px 22px;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1 class="title africa" data-parallax="0.4">ÁFRICA</h1>
+    <p class="description">
+      <span id="desc-africa">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
+    </p>
+    <a href="#" class="btn" data-target="africa">Descubra mais</a>
+  </div>
+
+  <div class="card">
+    <h1 class="title suica" data-parallax="0.4">SUÍÇA</h1>
+    <p class="description">
+      <span id="desc-suica">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
+    </p>
+    <a href="#" class="btn" data-target="suica">Descubra mais</a>
+  </div>
+
+  <div class="card">
+    <h1 class="title irlanda" data-parallax="0.4">IRLANDA</h1>
+    <p class="description">
+      <span id="desc-irlanda">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
+    </p>
+    <a href="#" class="btn" data-target="irlanda">Descubra mais</a>
+  </div>
+
+  <div class="card">
+    <h1 class="title canada" data-parallax="0.4">CANADÁ</h1>
+    <p class="description">
+      <span id="desc-canada">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?</span>
+    </p>
+    <a href="#" class="btn" data-target="canada">Descubra mais</a>
+  </div>
+
+  <!-- Botão de voltar ao topo -->
+  <button class="back-top" id="backTopBtn" aria-label="Voltar ao topo">↑</button>
+
+  <div class="footer-note">
+    <p>✈️ Role a página para ver o efeito parallax nas imagens dos títulos.</p>
+  </div>
+
+  <script>
+    (function() {
+      "use strict";
+
+      // ---- Dados dos destinos (conteúdo mais rico) ----
+      const destinationData = {
+        africa: {
+          title: "ÁFRICA",
+          description: "A África é um continente de contrastes: savanas infinitas, desertos dourados, florestas tropicais e uma diversidade cultural única. Do safári no Quênia às pirâmides do Egito, cada país oferece uma aventura inesquecível. A fauna exuberante e as tradições milenares fazem deste destino um dos mais fascinantes do planeta."
+        },
+        suica: {
+          title: "SUÍÇA",
+          description: "A Suíça é sinônimo de precisão e beleza natural. Com os Alpes como pano de fundo, lagos cristalinos e vilarejos pitorescos, é o destino perfeito para quem busca paz e aventura. Esqui em Zermatt, chocolate em Berna e a vista do Matterhorn são apenas o começo de uma experiência inesquecível."
+        },
+        irlanda: {
+          title: "IRLANDA",
+          description: "A Irlanda encanta com suas colinas verdes, castelos medievais e uma atmosfera acolhedora. De Dublin a Galway, a música tradicional e os pubs animados convivem com paisagens de tirar o fôlego. Os penhascos de Moher e a lenda dos duendes tornam a ilha um lugar mágico e cheio de história."
+        },
+        canada: {
+          title: "CANADÁ",
+          description: "O Canadá é imenso e diverso: das Montanhas Rochosas às planícies do centro, das florestas boreais às cidades cosmopolitas como Toronto e Vancouver. Lagos, ursos-pardos, auroras boreais e uma natureza intocada fazem deste país um paraíso para os amantes do ar livre e da fotografia."
+        }
+      };
+
+      // ---- Elementos ----
+      const descSpans = {
+        africa: document.getElementById('desc-africa'),
+        suica: document.getElementById('desc-suica'),
+        irlanda: document.getElementById('desc-irlanda'),
+        canada: document.getElementById('desc-canada')
+      };
+
+      const buttons = document.querySelectorAll('.btn');
+      const backBtn = document.getElementById('backTopBtn');
+
+      // ---- Elementos com efeito parallax ----
+      const parallaxTitles = document.querySelectorAll('.title[data-parallax]');
+
+      // ---- Função para atualizar a descrição de um destino ----
+      function updateDescription(target, useFull) {
+        const data = destinationData[target];
+        if (!data) return;
+        const span = descSpans[target];
+        if (!span) return;
+
+        if (useFull) {
+          span.textContent = data.description;
+          span.style.transition = 'opacity 0.25s';
+          span.style.opacity = '0';
+          setTimeout(() => {
+            span.style.opacity = '1';
+          }, 50);
+        } else {
+          const originalTexts = {
+            africa: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
+            suica: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
+            irlanda: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?',
+            canada: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elo doloremque inventore blanditiis autem sed dignissimos tempora in suscipit. Libero repudiandae nihil obcaecati tenetur aliquid molestiae esse sunt architecto eaque doloreque, voluptate non?'
+          };
+          span.textContent = originalTexts[target] || data.description;
+          span.style.opacity = '0';
+          setTimeout(() => {
+            span.style.opacity = '1';
+          }, 50);
+        }
+      }
+
+      // ---- Estado dos botões ----
+      const expandedState = {
+        africa: false,
+        suica: false,
+        irlanda: false,
+        canada: false
+      };
+
+      // ---- Clique nos botões ----
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = this.getAttribute('data-target');
+          if (!target || !destinationData[target]) return;
+
+          const isExpanded = expandedState[target];
+          const newState = !isExpanded;
+          expandedState[target] = newState;
+
+          updateDescription(target, newState);
+          this.textContent = newState ? 'Mostrar menos' : 'Descubra mais';
+
+          this.style.transform = 'scale(0.96)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 150);
+        });
+      });
+
+      // ---- Efeito Parallax: mover a imagem de fundo para cima ao scrollar ----
+      function updateParallax() {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+
+        parallaxTitles.forEach(title => {
+          const rect = title.getBoundingClientRect();
+          const titleCenter = rect.top + rect.height / 2;
+          const viewportCenter = windowHeight / 2;
+          
+          // Calcula a distância do centro do título em relação ao centro da viewport
+          const offset = (titleCenter - viewportCenter) / windowHeight;
+          
+          // Fator de movimento: quanto maior, mais a imagem se move
+          const speed = parseFloat(title.getAttribute('data-parallax')) || 0.3;
+          
+          // Movimento vertical da imagem (em porcentagem)
+          // Valores negativos movem para cima, positivos para baixo
+          const moveY = -offset * 40 * speed;
+          
+          // Aplica o movimento mantendo o centro como referência
+          title.style.backgroundPosition = `center ${50 + moveY}%`;
+        });
+      }
+
+      // ---- Throttle para performance ----
+      let ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateParallax();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      // ---- Botão "Voltar ao topo" ----
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 500) {
+          backBtn.classList.add('visible');
+        } else {
+          backBtn.classList.remove('visible');
+        }
+        onScroll();
+      });
+
+      backBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      // ---- Inicialização ----
+      // Atualiza o parallax na carga inicial
+      setTimeout(updateParallax, 100);
+      window.addEventListener('resize', updateParallax);
+
+      // ---- Acessibilidade ----
+      buttons.forEach(btn => {
+        btn.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      });
+
+      console.log('🌍 Destinos com efeito parallax! Role a página para ver as imagens se moverem.');
+    })();
+  </script>
+
+</body>
+</html>
